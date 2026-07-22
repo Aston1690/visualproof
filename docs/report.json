@@ -1,8 +1,8 @@
 {
   "tool": "VisualProof",
   "version": "0.1.0",
-  "url": "http://127.0.0.1:8765/examples/demo/index.html",
-  "auditedAt": "2026-07-22T13:35:05.483Z",
+  "url": "https://aston1690.github.io/visualproof/demo.html",
+  "auditedAt": "2026-07-22T13:50:36.914Z",
   "summary": {
     "score": 55,
     "grade": "F",

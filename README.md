@@ -17,7 +17,7 @@ No AI API key. No subjective prompt output. Every issue includes reproducible br
 [Open the live sample report](https://aston1690.github.io/visualproof/)
 
 <p align="center">
-  <a href="https://aston1690.github.io/visualproof/"><img src="assets/report-preview.png" alt="VisualProof HTML report preview" width="100%"></a>
+  <a href="https://aston1690.github.io/visualproof/"><img src="assets/visualproof-demo.gif" alt="VisualProof auditing desktop and mobile evidence" width="100%"></a>
 </p>
 
 ## What it catches

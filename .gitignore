@@ -1,0 +1,6 @@
+node_modules/
+playwright-report/
+test-results/
+visualproof-report/
+demo-report/
+.DS_Store

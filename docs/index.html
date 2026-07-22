@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VisualProof audit — http://127.0.0.1:8765/examples/demo/index.html</title><style>
+:root{color-scheme:dark;--ink:#f4f5ed;--muted:#9ca493;--panel:#171b16;--line:#30382d;--lime:#c8ff4d;--red:#ff806f;--amber:#ffc661}*{box-sizing:border-box}body{margin:0;background:#0c0f0b;color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 90% 5%,#30401988,transparent 28%),linear-gradient(#ffffff05 1px,transparent 1px);background-size:auto,100% 32px}.wrap{width:min(1180px,calc(100% - 36px));margin:auto;position:relative}.nav{height:84px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line)}.nav img{width:38px}.nav strong{font-size:18px;letter-spacing:-.03em}.nav em{color:var(--muted);font-style:normal;margin-left:auto}.hero{padding:72px 0 56px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--lime);font:700 11px/1.4 ui-monospace,monospace}.hero h1{font-size:clamp(40px,7vw,84px);letter-spacing:-.065em;line-height:.92;margin:14px 0 24px;max-width:820px}.url{color:var(--muted);overflow-wrap:anywhere}.score{width:170px;height:170px;border:1px solid var(--line);border-radius:50%;display:grid;place-content:center;text-align:center;box-shadow:inset 0 0 0 12px #11150f}.score b{font-size:70px;line-height:.9;color:var(--lime)}.score span{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:11px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#11150fcc;margin-bottom:64px}.metric{padding:22px 26px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric b{display:block;font-size:28px}.metric span{color:var(--muted)}.viewport-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,42%);gap:32px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px;margin:0 0 28px;box-shadow:0 30px 80px #0005}.viewport-copy h3{font-size:26px;letter-spacing:-.03em;margin:8px 0 24px}.viewport-copy h3 span{float:right;color:var(--lime)}.issues{display:grid;gap:12px}.issue{border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:10px;padding:16px;background:#11150f}.issue.high{border-left-color:var(--red)}.issue.low{border-left-color:#7dc8ff}.issue-top{display:flex;justify-content:space-between}.severity{text-transform:uppercase;font:bold 10px ui-monospace;color:var(--amber)}.high .severity{color:var(--red)}code,pre{font:12px ui-monospace,monospace;color:var(--muted)}.issue h4{font-size:16px;margin:12px 0 6px}.issue pre{white-space:pre-wrap;margin:0}.shot{display:block;align-self:start;background:#090b09;border:1px solid var(--line);border-radius:12px;overflow:hidden}.shot img{display:block;width:100%;height:auto}.pass{padding:20px;border:1px solid #436026;color:var(--lime);border-radius:10px}.footer{padding:40px 0 70px;color:var(--muted);display:flex;justify-content:space-between}@media(max-width:760px){.hero,.viewport-card{grid-template-columns:1fr}.score{width:120px;height:120px}.score b{font-size:48px}.metrics{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid var(--line)}}
+</style></head><body><main class="wrap"><nav class="nav"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2218%22%20fill%3D%22%23c8ff4d%22%2F%3E%3Cpath%20d%3D%22M15%2020h9l8%2025%208-25h9L37%2052H27z%22%20fill%3D%22%2311150f%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2216%22%20r%3D%225%22%20fill%3D%22%2311150f%22%2F%3E%3C%2Fsvg%3E" alt=""><strong>VisualProof</strong><em>Evidence-first visual QA</em></nav>
+<header class="hero"><div><div class="eyebrow">Audit completed · 2026-07-22T13:35:05.483Z</div><h1>Proof over opinion.</h1><div class="url">http://127.0.0.1:8765/examples/demo/index.html</div></div><div class="score"><b>F</b><span>55 / 100</span></div></header>
+<section class="metrics"><div class="metric"><b>13</b><span>Issues recorded</span></div><div class="metric"><b>2</b><span>Viewports captured</span></div><div class="metric"><b>55</b><span>Overall score</span></div></section>
+<section class="viewport-card">
+      <div class="viewport-copy"><div class="eyebrow">desktop · 1440×900</div>
+      <h3>Viewport evidence <span>D / 61</span></h3><div class="issues">
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>meta-description</code></div>
+        <h4>Meta description is missing.</h4><pre>meta[name=&quot;description&quot;] is empty or absent</pre>
+      </article>
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>h1-count</code></div>
+        <h4>Page has multiple H1 headings.</h4><pre>Found 2 H1 elements</pre>
+      </article>
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>image-alt</code></div>
+        <h4>1 image is missing alt text.</h4><pre>data:image/svg+xml,%3Csvg xmlns=&#039;http://www.w3.org/2000/svg&#039; width=&#039;760&#039; height=&#039;260&#039;%3E%3Crect width=&#039;100%25&#039; height=&#039;100%25&#039; fill=&#039;%232563eb&#039;/%3E%3C/svg%3E</pre>
+      </article>
+      <article class="issue high">
+        <div class="issue-top"><span class="severity">high</span><code>console-errors</code></div>
+        <h4>1 console error was recorded.</h4><pre>Demo console error: intentional</pre>
+      </article>
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>touch-target</code></div>
+        <h4>1 interactive element has a small touch target.</h4><pre>Open menu (34×34px)</pre>
+      </article>
+      <article class="issue low">
+        <div class="issue-top"><span class="severity">low</span><code>oversized-heading</code></div>
+        <h4>A heading may overwhelm the viewport.</h4><pre>“Proof over opinion.” renders at 104px (96px limit)</pre>
+      </article></div></div>
+      <a class="shot" href="screenshots/desktop.png"><img src="screenshots/desktop.png" alt="desktop screenshot"></a>
+    </section><section class="viewport-card">
+      <div class="viewport-copy"><div class="eyebrow">mobile · 390×844</div>
+      <h3>Viewport evidence <span>F / 49</span></h3><div class="issues">
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>meta-description</code></div>
+        <h4>Meta description is missing.</h4><pre>meta[name=&quot;description&quot;] is empty or absent</pre>
+      </article>
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>h1-count</code></div>
+        <h4>Page has multiple H1 headings.</h4><pre>Found 2 H1 elements</pre>
+      </article>
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>image-alt</code></div>
+        <h4>1 image is missing alt text.</h4><pre>data:image/svg+xml,%3Csvg xmlns=&#039;http://www.w3.org/2000/svg&#039; width=&#039;760&#039; height=&#039;260&#039;%3E%3Crect width=&#039;100%25&#039; height=&#039;100%25&#039; fill=&#039;%232563eb&#039;/%3E%3C/svg%3E</pre>
+      </article>
+      <article class="issue high">
+        <div class="issue-top"><span class="severity">high</span><code>horizontal-overflow</code></div>
+        <h4>Page overflows the viewport horizontally.</h4><pre>Content extends 370px beyond the viewport</pre>
+      </article>
+      <article class="issue high">
+        <div class="issue-top"><span class="severity">high</span><code>console-errors</code></div>
+        <h4>1 console error was recorded.</h4><pre>Demo console error: intentional</pre>
+      </article>
+      <article class="issue medium">
+        <div class="issue-top"><span class="severity">medium</span><code>touch-target</code></div>
+        <h4>1 interactive element has a small touch target.</h4><pre>Open menu (34×34px)</pre>
+      </article>
+      <article class="issue low">
+        <div class="issue-top"><span class="severity">low</span><code>oversized-heading</code></div>
+        <h4>A heading may overwhelm the mobile viewport.</h4><pre>“Proof over opinion.” renders at 104px (64px limit)</pre>
+      </article></div></div>
+      <a class="shot" href="screenshots/mobile.png"><img src="screenshots/mobile.png" alt="mobile screenshot"></a>
+    </section><footer class="footer"><span>Generated by VisualProof 0.1.0</span><span>Objective evidence. Actionable QA.</span></footer></main></body></html>

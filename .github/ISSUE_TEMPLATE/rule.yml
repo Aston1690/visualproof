@@ -1,0 +1,33 @@
+name: Rule proposal
+description: Propose a deterministic visual QA check
+title: "[Rule]: "
+labels: [enhancement, rule-proposal]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What measurable interface problem should VisualProof detect?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Browser evidence
+      description: Which DOM, CSS, accessibility, console, or layout signal proves the problem?
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Suggested severity
+      options: [High, Medium, Low, Informational]
+    validations:
+      required: true
+  - type: textarea
+    id: false-positives
+    attributes:
+      label: False-positive risks
+      description: When could this signal be intentional or misleading?
+    validations:
+      required: true

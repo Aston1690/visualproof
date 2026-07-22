@@ -1,0 +1,45 @@
+{
+  "name": "visualproof",
+  "version": "0.1.0",
+  "description": "Evidence-first visual QA for websites — screenshots, objective checks, and shareable HTML reports.",
+  "type": "module",
+  "bin": {
+    "visualproof": "./src/cli.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/core.js && node --check src/audit.js && node --check src/report.js && node --check src/cli.js",
+    "audit:demo": "node src/cli.js audit examples/demo/index.html --output demo-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aston1690/visualproof.git"
+  },
+  "homepage": "https://aston1690.github.io/visualproof/",
+  "bugs": {
+    "url": "https://github.com/Aston1690/visualproof/issues"
+  },
+  "keywords": [
+    "visual-qa",
+    "ui-audit",
+    "ux",
+    "playwright",
+    "accessibility",
+    "website-testing",
+    "design-system",
+    "cli"
+  ],
+  "author": "Akhil (Aston1690)",
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}

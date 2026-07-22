@@ -1,0 +1,172 @@
+{
+  "tool": "VisualProof",
+  "version": "0.1.0",
+  "url": "http://127.0.0.1:8765/examples/demo/index.html",
+  "auditedAt": "2026-07-22T13:35:05.483Z",
+  "summary": {
+    "score": 55,
+    "grade": "F",
+    "issueCount": 13,
+    "viewports": 2
+  },
+  "results": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "screenshots/desktop.png",
+      "evidence": {
+        "title": "VisualProof Demo — Deliberately Imperfect",
+        "metaDescription": "",
+        "h1Count": 2,
+        "images": [
+          {
+            "alt": "",
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='260'%3E%3Crect width='100%25' height='100%25' fill='%232563eb'/%3E%3C/svg%3E"
+          }
+        ],
+        "interactive": [
+          {
+            "label": "Open menu",
+            "width": 34,
+            "height": 34
+          }
+        ],
+        "overflowPx": 0,
+        "largestHeadingPx": 104,
+        "largestHeadingText": "Proof over opinion.",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "consoleErrors": [
+          "Demo console error: intentional"
+        ]
+      },
+      "score": 61,
+      "grade": "D",
+      "issues": [
+        {
+          "rule": "meta-description",
+          "severity": "medium",
+          "message": "Meta description is missing.",
+          "evidence": "meta[name=\"description\"] is empty or absent"
+        },
+        {
+          "rule": "h1-count",
+          "severity": "medium",
+          "message": "Page has multiple H1 headings.",
+          "evidence": "Found 2 H1 elements"
+        },
+        {
+          "rule": "image-alt",
+          "severity": "medium",
+          "message": "1 image is missing alt text.",
+          "evidence": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='260'%3E%3Crect width='100%25' height='100%25' fill='%232563eb'/%3E%3C/svg%3E"
+        },
+        {
+          "rule": "console-errors",
+          "severity": "high",
+          "message": "1 console error was recorded.",
+          "evidence": "Demo console error: intentional"
+        },
+        {
+          "rule": "touch-target",
+          "severity": "medium",
+          "message": "1 interactive element has a small touch target.",
+          "evidence": "Open menu (34×34px)"
+        },
+        {
+          "rule": "oversized-heading",
+          "severity": "low",
+          "message": "A heading may overwhelm the viewport.",
+          "evidence": "“Proof over opinion.” renders at 104px (96px limit)"
+        }
+      ]
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "screenshots/mobile.png",
+      "evidence": {
+        "title": "VisualProof Demo — Deliberately Imperfect",
+        "metaDescription": "",
+        "h1Count": 2,
+        "images": [
+          {
+            "alt": "",
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='260'%3E%3Crect width='100%25' height='100%25' fill='%232563eb'/%3E%3C/svg%3E"
+          }
+        ],
+        "interactive": [
+          {
+            "label": "Open menu",
+            "width": 34,
+            "height": 34
+          }
+        ],
+        "overflowPx": 370,
+        "largestHeadingPx": 104,
+        "largestHeadingText": "Proof over opinion.",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "consoleErrors": [
+          "Demo console error: intentional"
+        ]
+      },
+      "score": 49,
+      "grade": "F",
+      "issues": [
+        {
+          "rule": "meta-description",
+          "severity": "medium",
+          "message": "Meta description is missing.",
+          "evidence": "meta[name=\"description\"] is empty or absent"
+        },
+        {
+          "rule": "h1-count",
+          "severity": "medium",
+          "message": "Page has multiple H1 headings.",
+          "evidence": "Found 2 H1 elements"
+        },
+        {
+          "rule": "image-alt",
+          "severity": "medium",
+          "message": "1 image is missing alt text.",
+          "evidence": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='260'%3E%3Crect width='100%25' height='100%25' fill='%232563eb'/%3E%3C/svg%3E"
+        },
+        {
+          "rule": "horizontal-overflow",
+          "severity": "high",
+          "message": "Page overflows the viewport horizontally.",
+          "evidence": "Content extends 370px beyond the viewport"
+        },
+        {
+          "rule": "console-errors",
+          "severity": "high",
+          "message": "1 console error was recorded.",
+          "evidence": "Demo console error: intentional"
+        },
+        {
+          "rule": "touch-target",
+          "severity": "medium",
+          "message": "1 interactive element has a small touch target.",
+          "evidence": "Open menu (34×34px)"
+        },
+        {
+          "rule": "oversized-heading",
+          "severity": "low",
+          "message": "A heading may overwhelm the mobile viewport.",
+          "evidence": "“Proof over opinion.” renders at 104px (64px limit)"
+        }
+      ]
+    }
+  ]
+}

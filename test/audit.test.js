@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, stat, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, stat, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -40,5 +40,42 @@ test('rejects an empty viewport configuration', async () => {
   await assert.rejects(
     auditTarget('https://example.com', output, { viewports: [] }),
     /at least one viewport/
+  );
+});
+
+test('rejects duplicate viewport names before screenshots can collide', async () => {
+  const output = await mkdtemp(path.join(tmpdir(), 'visualproof-duplicate-'));
+  await assert.rejects(
+    auditTarget('https://example.com', output, {
+      viewports: [
+        { name: 'mobile', width: 390, height: 844 },
+        { name: 'Mobile', width: 430, height: 932 }
+      ]
+    }),
+    /unique names/
+  );
+});
+
+test('rejects a screenshots directory symlink that escapes the output directory', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'visualproof-symlink-'));
+  const output = path.join(root, 'output');
+  const outside = path.join(root, 'outside');
+  await mkdir(output);
+  await mkdir(outside);
+  await symlink(outside, path.join(output, 'screenshots'));
+
+  await assert.rejects(
+    auditTarget('https://example.com', output),
+    /escapes the output directory/
+  );
+});
+
+test('requires viewport names to be primitive strings', async () => {
+  const output = await mkdtemp(path.join(tmpdir(), 'visualproof-name-type-'));
+  await assert.rejects(
+    auditTarget('https://example.com', output, {
+      viewports: [{ name: 1, width: 390, height: 844 }]
+    }),
+    /must be a string/
   );
 });

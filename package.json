@@ -1,6 +1,6 @@
 {
   "name": "visualproof",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Evidence-first visual QA for websites — screenshots, objective checks, and shareable HTML reports.",
   "type": "module",
   "bin": {
@@ -12,7 +12,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "node --test",
+    "test": "node --test --test-concurrency=1",
     "check": "node --check src/core.js && node --check src/audit.js && node --check src/report.js && node --check src/cli.js",
     "audit:demo": "node src/cli.js audit examples/demo/index.html --output demo-report"
   },

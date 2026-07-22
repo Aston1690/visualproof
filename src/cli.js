@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
 import { access } from 'node:fs/promises';
 import { auditTarget } from './audit.js';
 import { writeReport } from './report.js';
@@ -34,7 +35,7 @@ export async function run(args = process.argv.slice(2)) {
     return;
   }
   if (args.includes('--version')) {
-    console.log('0.1.0');
+    console.log('0.1.1');
     return;
   }
   if (args[0] !== 'audit' || !args[1] || args[1].startsWith('--')) {
@@ -51,7 +52,18 @@ export async function run(args = process.argv.slice(2)) {
   console.log(`JSON: ${files.json}`);
 }
 
-run().catch((error) => {
-  console.error(`VisualProof failed: ${error.message}`);
-  process.exitCode = 1;
-});
+function isMainModule() {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(process.argv[1]) === fileURLToPath(import.meta.url);
+  } catch {
+    return false;
+  }
+}
+
+if (isMainModule()) {
+  run().catch((error) => {
+    console.error(`VisualProof failed: ${error.message}`);
+    process.exitCode = 1;
+  });
+}

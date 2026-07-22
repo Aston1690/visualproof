@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { mkdtemp, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, stat, symlink } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -18,7 +18,34 @@ test('CLI audits a local HTML file and writes a complete report', async () => {
 
   assert.match(stdout, /Audit complete/);
   await stat(path.join(output, 'index.html'));
-  await stat(path.join(output, 'report.json'));
-  await stat(path.join(output, 'screenshots/desktop.png'));
-  await stat(path.join(output, 'screenshots/mobile.png'));
+  const reportPath = path.join(output, 'report.json');
+  await stat(reportPath);
+  const report = JSON.parse(await readFile(reportPath, 'utf8'));
+  assert.equal(report.results.length, 2);
+  for (const result of report.results) {
+    assert.match(result.screenshot, new RegExp(`^screenshots/${result.name}-[a-f0-9-]+\\.png$`));
+    await stat(path.join(output, result.screenshot));
+  }
+});
+
+test('importing the CLI module does not execute it', async () => {
+  const cliUrl = new URL('../src/cli.js', import.meta.url).href;
+  const script = `process.argv = ['node', 'host', 'audit', 'https://example.com']; await import(${JSON.stringify(cliUrl)}); console.log('imported');`;
+  const { stdout, stderr } = await execFileAsync(process.execPath, ['--input-type=module', '--eval', script], {
+    cwd: path.resolve('.'),
+    timeout: 10000
+  });
+
+  assert.equal(stdout, 'imported\n');
+  assert.equal(stderr, '');
+});
+
+test('CLI executes correctly through an npm-style symlink', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'visualproof-bin-'));
+  const bin = path.join(root, 'visualproof');
+  await symlink(path.resolve('src/cli.js'), bin);
+
+  const { stdout, stderr } = await execFileAsync(bin, ['--version'], { timeout: 10000 });
+  assert.equal(stdout, '0.1.1\n');
+  assert.equal(stderr, '');
 });

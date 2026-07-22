@@ -37,8 +37,8 @@ visualproof-report/
 ├── index.html
 ├── report.json
 └── screenshots/
-    ├── desktop.png
-    └── mobile.png
+    ├── desktop-<capture-id>.png
+    └── mobile-<capture-id>.png
 ```
 
 ## Quick start
@@ -89,7 +89,7 @@ Scores are intentionally simple and inspectable. The evidence matters more than 
 
 ## Report design
 
-The generated report is a single HTML file with no external scripts or stylesheets. Send it to a teammate, attach it to an issue, or store it as a CI artifact. Screenshots remain beside the report and are linked using relative paths.
+The generated report is a single HTML file with no external scripts or stylesheets. Desktop and mobile screenshots are embedded directly as PNG data, so the report remains complete when it is moved, attached to an issue, or stored as a CI artifact. Separate PNG files are also retained for direct inspection.
 
 ## Use it from code
 

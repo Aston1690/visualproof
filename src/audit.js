@@ -1,5 +1,7 @@
 import { chromium } from 'playwright';
-import { mkdir } from 'node:fs/promises';
+import { lstat, mkdir, open, realpath } from 'node:fs/promises';
+import { constants } from 'node:fs';
+import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { evaluateSnapshot } from './core.js';
 
@@ -9,6 +11,10 @@ export const VIEWPORTS = [
 ];
 
 const gradeFor = (score) => score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+const isPathInside = (root, candidate) => {
+  const relative = path.relative(root, candidate);
+  return relative !== '' && !relative.startsWith('..') && !path.isAbsolute(relative);
+};
 
 async function collectEvidence(page, viewport, consoleErrors) {
   const browserEvidence = await page.evaluate(() => {
@@ -56,48 +62,90 @@ export async function auditTarget(url, outputDir, options = {}) {
   if (!Array.isArray(viewports) || viewports.length === 0) {
     throw new Error('VisualProof requires at least one viewport.');
   }
+  const viewportNames = new Set();
   for (const viewport of viewports) {
+    if (typeof viewport.name !== 'string') {
+      throw new Error('Each viewport name must be a string.');
+    }
     if (!/^[A-Za-z0-9][A-Za-z0-9_-]*$/.test(String(viewport.name ?? ''))) {
       throw new Error('Each viewport must have a safe name containing only letters, numbers, underscores, or hyphens.');
     }
     if (!Number.isInteger(viewport.width) || !Number.isInteger(viewport.height) || viewport.width < 1 || viewport.height < 1 || viewport.width > 10000 || viewport.height > 10000) {
       throw new Error('Viewport width and height must be positive integers no greater than 10000.');
     }
+    const viewportNameKey = viewport.name.toLowerCase();
+    if (viewportNames.has(viewportNameKey)) {
+      throw new Error('Viewports must have unique names.');
+    }
+    viewportNames.add(viewportNameKey);
   }
-  const browser = await chromium.launch({ headless: true });
   const screenshotsDir = path.join(outputDir, 'screenshots');
   await mkdir(screenshotsDir, { recursive: true });
+  const [outputRoot, screenshotsRoot] = await Promise.all([
+    realpath(outputDir),
+    realpath(screenshotsDir)
+  ]);
+  if (!isPathInside(outputRoot, screenshotsRoot)) {
+    throw new Error('The screenshots directory escapes the output directory.');
+  }
+  const browser = await chromium.launch({ headless: true });
 
   try {
     const results = [];
     for (const viewport of viewports) {
       const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
-      const page = await context.newPage();
-      const consoleErrors = [];
-      page.on('console', (message) => {
-        if (message.type() === 'error') consoleErrors.push(message.text());
-      });
-      page.on('pageerror', (error) => consoleErrors.push(error.message));
+      try {
+        const page = await context.newPage();
+        const consoleErrors = [];
+        page.on('console', (message) => {
+          if (message.type() === 'error') consoleErrors.push(message.text());
+        });
+        page.on('pageerror', (error) => consoleErrors.push(error.message));
 
-      await page.goto(url, { waitUntil: 'load', timeout: options.timeout ?? 30000 });
-      const evidence = await collectEvidence(page, { width: viewport.width, height: viewport.height }, consoleErrors);
-      const assessment = evaluateSnapshot(evidence);
-      const screenshot = `screenshots/${viewport.name}.png`;
-      await page.screenshot({ path: path.join(outputDir, screenshot), fullPage: true });
-      results.push({
-        name: viewport.name,
-        viewport: { width: viewport.width, height: viewport.height },
-        screenshot,
-        evidence,
-        ...assessment
-      });
-      await context.close();
+        await page.goto(url, { waitUntil: 'load', timeout: options.timeout ?? 30000 });
+        const evidence = await collectEvidence(page, { width: viewport.width, height: viewport.height }, consoleErrors);
+        const assessment = evaluateSnapshot(evidence);
+        const screenshotId = randomUUID();
+        const screenshot = `screenshots/${viewport.name}-${screenshotId}.png`;
+        const screenshotPath = path.join(screenshotsRoot, `${viewport.name}-${screenshotId}.png`);
+        const screenshotBuffer = await page.screenshot({ fullPage: true });
+        const screenshotFile = await open(
+          screenshotPath,
+          constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL | constants.O_NOFOLLOW,
+          0o600
+        );
+        try {
+          const [openedStat, pathStat, resolvedScreenshot] = await Promise.all([
+            screenshotFile.stat(),
+            lstat(screenshotPath),
+            realpath(screenshotPath)
+          ]);
+          if (openedStat.dev !== pathStat.dev || openedStat.ino !== pathStat.ino) {
+            throw new Error('Screenshot destination changed during capture.');
+          }
+          if (!isPathInside(screenshotsRoot, resolvedScreenshot)) {
+            throw new Error('Screenshot destination escapes the screenshots directory.');
+          }
+          await screenshotFile.writeFile(screenshotBuffer);
+        } finally {
+          await screenshotFile.close();
+        }
+        results.push({
+          name: viewport.name,
+          viewport: { width: viewport.width, height: viewport.height },
+          screenshot,
+          evidence,
+          ...assessment
+        });
+      } finally {
+        await context.close();
+      }
     }
 
     const score = Math.round(results.reduce((total, result) => total + result.score, 0) / results.length);
     return {
       tool: 'VisualProof',
-      version: '0.1.0',
+      version: '0.1.1',
       url,
       auditedAt: new Date().toISOString(),
       summary: {

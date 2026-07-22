@@ -5,6 +5,7 @@
 <p align="center">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2563eb"></a>
   <img alt="Node 20+" src="https://img.shields.io/badge/node-%E2%89%A520-111827">
+  <a href="https://github.com/Aston1690/visualproof/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Aston1690/visualproof/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/Aston1690/visualproof/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Aston1690/visualproof?style=flat"></a>
 </p>
 
